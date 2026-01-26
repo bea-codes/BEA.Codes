@@ -24,4 +24,21 @@ public static class StringExtensions
 
         value = value.Remove(place, find.Length).Insert(place, replace);
     }
+
+    public static string TruncateSmart(this string? value, int maxLength)
+    {
+        if (string.IsNullOrEmpty(value)) return string.Empty;
+        if (value.Length <= maxLength) return value;
+
+        // Find the last space within the limit
+        int lastSpace = value.LastIndexOf(' ', maxLength);
+        if (lastSpace > 0) // Found a space, cut there
+        {
+            return value.Substring(0, lastSpace) + "...";
+        }
+        else // No space found, cut at maxLength
+        {
+            return value.Substring(0, maxLength) + "...";
+        }
+    }
 }
