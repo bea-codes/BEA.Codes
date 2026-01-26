@@ -2,9 +2,14 @@
 
 public static class StringExtensions
 {
-    public static T IfNotNullOrEmpty<T>(this string value, Func<string, T> func, T defaultValue = default)
+    public static T IfNotNullOrEmpty<T>(this string? value, Func<string, T> func, T defaultValue = default)
     {
         return string.IsNullOrEmpty(value) ? defaultValue : func(value);
+    }
+
+    public static string IfNullOrEmpty(this string? value, string defaultValue = default)
+    {
+        return string.IsNullOrEmpty(value) ? defaultValue : value;
     }
 
     public static void ReplaceLastOccurrence(this string value, string find, string replace)
