@@ -1,4 +1,4 @@
-﻿namespace Emobi.Extensions;
+﻿namespace BEA.Extensions;
 
 public static class StringExtensions
 {
