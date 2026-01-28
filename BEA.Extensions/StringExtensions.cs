@@ -25,15 +25,28 @@ public static class StringExtensions
         value = value.Remove(place, find.Length).Insert(place, replace);
     }
 
+    public static string ToPersonNameCapitalization(this string? value)
+    {
+        List<string> exceptions = [
+            "da",
+            "das",
+            "de",
+            "do",
+            "dos",
+            "e",
+        ];
+
+        return ToUpperFirstCharEachWord(value, exceptions);
+    }
     public static string ToUpperFirstChar(this string? value)
     {
         if (string.IsNullOrEmpty(value))
             return string.Empty;
 
-        return char.ToUpper(value[0]) + value.Substring(1);
+        return char.ToUpper(value[0]) + value.Substring(1).ToLower();
     }
 
-    public static string ToUpperFirstCharEachWord(this string? value)
+    public static string ToUpperFirstCharEachWord(this string? value, List<string> exceptions)
     {
         if (string.IsNullOrEmpty(value))
             return string.Empty;
@@ -44,7 +57,10 @@ public static class StringExtensions
         {
             if (words[i].Length > 0)
             {
-                words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1);
+                if (exceptions.Contains(words[i].ToLower()))
+                    continue;
+
+                words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
             }
         }
         return string.Join(" ", words);
