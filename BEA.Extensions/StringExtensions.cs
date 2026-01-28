@@ -25,6 +25,31 @@ public static class StringExtensions
         value = value.Remove(place, find.Length).Insert(place, replace);
     }
 
+    public static string ToUpperFirstChar(this string? value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return string.Empty;
+
+        return char.ToUpper(value[0]) + value.Substring(1);
+    }
+
+    public static string ToUpperFirstCharEachWord(this string? value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return string.Empty;
+
+        var words = value.Split(' ');
+
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (words[i].Length > 0)
+            {
+                words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1);
+            }
+        }
+        return string.Join(" ", words);
+    }
+
     public static string TruncateSmart(this string? value, int maxLength)
     {
         if (string.IsNullOrEmpty(value)) return string.Empty;
