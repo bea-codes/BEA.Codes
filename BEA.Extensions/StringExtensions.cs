@@ -75,6 +75,30 @@ public static class StringExtensions
         return input.Replace(" ", "_");
     }
 
+    public static Dictionary<string, string> ToKeyValueDictionary(this string input, char separator)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+            return new Dictionary<string, string>();
+
+        var parts = input.Split(separator);
+        parts = parts.Where(p => !string.IsNullOrWhiteSpace(p)).ToArray();
+
+        if (parts.Length % 2 != 0)
+            throw new ArgumentException("A quantidade de elementos deve ser par (key/value).");
+
+        var dict = new Dictionary<string, string>();
+
+        for (int i = 0; i < parts.Length; i += 2)
+        {
+            var key = parts[i];
+            var value = parts[i + 1];
+
+            dict[key] = value;
+        }
+
+        return dict;
+    }
+
     public static string ToPersonNameCapitalization(this string? value)
     {
         List<string> exceptions = [
