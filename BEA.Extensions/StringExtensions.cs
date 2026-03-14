@@ -16,6 +16,11 @@ public static class StringExtensions
         return string.IsNullOrEmpty(value) ? defaultValue : value;
     }
 
+    public static string? NullIfWhiteSpace(this string? value)
+    {
+        return string.IsNullOrWhiteSpace(value) ? null : value;
+    }
+
     public static string RemoveDiacritics(this string text)
     {
         string normalizedString = text.Normalize(NormalizationForm.FormD);
