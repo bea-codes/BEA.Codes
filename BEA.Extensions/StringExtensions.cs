@@ -38,7 +38,7 @@ public static class StringExtensions
         return stringBuilder.ToString();
     }
 
-    public static string RemoveSpaces(this string input)
+    public static string RemoveSpaces(this string input, bool useNextUpperFirstLetter = true)
     {
         var brokenInput = input.Split(' ');
 
@@ -51,7 +51,10 @@ public static class StringExtensions
 
         foreach (string part in brokenInput)
         {
-            output += part.ToUpperFirstLetter();
+            if (useNextUpperFirstLetter)
+                output += part.ToUpperFirstLetter();
+            else
+                output += part;
         }
 
         return output;
@@ -75,9 +78,9 @@ public static class StringExtensions
         value = value.Remove(place, find.Length).Insert(place, replace);
     }
 
-    public static string ReplaceSpaces(this string input)
+    public static string ReplaceSpaces(this string input, string replaceFor = "_")
     {
-        return input.Replace(" ", "_");
+        return input.Replace(" ", replaceFor);
     }
 
     public static Dictionary<string, string> ToKeyValueDictionary(this string input, char separator)
