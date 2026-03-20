@@ -65,17 +65,29 @@ public static class StringExtensions
         return Regex.Replace(input, $"[^a-zA-Z0-9{excepts}]", "");
     }
 
-    public static void ReplaceLastOccurrence(this string value, string find, string replace)
+    public static string RemoveLastOccurrence(this string value, string input) { 
+        if (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(input))
+            return value;
+
+        int place = value.LastIndexOf(input, StringComparison.Ordinal);
+
+        if (place == -1)
+            return value;
+
+        return value.Remove(place, input.Length);
+    }
+
+    public static string ReplaceLastOccurrence(this string value, string find, string replace)
     {
         if (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(find))
-            return;
+            return value;
 
         int place = value.LastIndexOf(find, StringComparison.Ordinal);
 
         if (place == -1)
-            return;
+            return value;
 
-        value = value.Remove(place, find.Length).Insert(place, replace);
+        return value.Remove(place, find.Length).Insert(place, replace);
     }
 
     public static string ReplaceSpaces(this string input, string replaceFor = "_")
