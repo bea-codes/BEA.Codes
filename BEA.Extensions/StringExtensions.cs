@@ -38,6 +38,29 @@ public static class StringExtensions
         return stringBuilder.ToString();
     }
 
+    public static string RemovePrepositions(this string input, string separator = "", IEnumerable<string> prepositions = null)
+    {
+        if (string.IsNullOrEmpty(input))
+            return string.Empty;
+
+        List<string> defaultPrepositions = [
+            "da",
+            "das",
+            "de",
+            "do",
+            "dos",
+            "e",
+        ];
+
+        var allPrepositions = prepositions != null ? defaultPrepositions.Union(prepositions) : defaultPrepositions;
+
+        var words = input.Split(' ');
+
+        var filteredWords = words.Where(word => !allPrepositions.Contains(word.ToLower()));
+
+        return string.Join(separator, filteredWords);
+    }
+
     public static string RemoveSpaces(this string input, bool useNextUpperFirstLetter = true)
     {
         var brokenInput = input.Split(' ');
