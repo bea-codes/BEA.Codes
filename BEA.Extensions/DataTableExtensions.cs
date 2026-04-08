@@ -29,9 +29,4 @@ public static class DataTableExtensions
 
         return table;
     }
-
-    public static T Then<T>(this bool value, T result)
-    {
-        return value ? result : default(T);
-    }
 }

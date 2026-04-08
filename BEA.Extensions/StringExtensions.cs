@@ -173,7 +173,7 @@ public static class StringExtensions
     //    return $"{input[0].ToString().ToUpper()}{input.Substring(1)}";
     //}
 
-    public static string ToUpperFirstLetterEachWord(this string? value, IEnumerable<string> exceptions)
+    public static string ToUpperFirstLetterEachWord(this string? value, IEnumerable<string> exceptions = default)
     {
         if (string.IsNullOrEmpty(value))
             return string.Empty;
@@ -184,7 +184,7 @@ public static class StringExtensions
         {
             if (words[i].Length > 0)
             {
-                if (exceptions.Contains(words[i].ToLower()))
+                if (exceptions is not null && exceptions.Contains(words[i].ToLower()))
                     continue;
 
                 words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
