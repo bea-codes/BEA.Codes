@@ -88,7 +88,8 @@ public static class StringExtensions
         return Regex.Replace(input, $"[^a-zA-Z0-9{excepts}]", "");
     }
 
-    public static string RemoveLastOccurrence(this string value, string input) { 
+    public static string RemoveLastOccurrence(this string value, string input)
+    {
         if (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(input))
             return value;
 
@@ -126,7 +127,7 @@ public static class StringExtensions
         string digitsOnly = Regex.Replace(input, @"\D", "");
 
         if (digitsOnly.Length != 14)
-            return digitsOnly;
+            return input;
 
         return $"{digitsOnly.Substring(0, 2)}.{digitsOnly.Substring(2, 3)}.{digitsOnly.Substring(5, 3)}/{digitsOnly.Substring(8, 4)}-{digitsOnly.Substring(12, 2)}";
     }
@@ -139,9 +140,24 @@ public static class StringExtensions
         string digitsOnly = Regex.Replace(input, @"\D", "");
 
         if (digitsOnly.Length != 11)
-            return digitsOnly;
+            return input;
 
         return $"{digitsOnly.Substring(0, 3)}.{digitsOnly.Substring(3, 3)}.{digitsOnly.Substring(6, 3)}-{digitsOnly.Substring(9, 2)}";
+    }
+
+    public static string ToFormattedCPFCNPJ(this string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return string.Empty;
+
+        string digitsOnly = Regex.Replace(input, @"\D", "");
+
+        if (digitsOnly.Length == 11)
+            return ToFormattedCPF(digitsOnly);
+        else if (digitsOnly.Length == 14)
+            return ToFormattedCNPJ(digitsOnly);
+        else
+            return input;
     }
 
     public static Dictionary<string, string> ToKeyValueDictionary(this string input, char separator)
@@ -189,7 +205,7 @@ public static class StringExtensions
 
         return char.ToUpper(value[0]) + value.Substring(1).ToLower();
     }
-    
+
     public static string ToUpperFirstLetterEachWord(this string? value, IEnumerable<string> exceptions = default)
     {
         if (string.IsNullOrEmpty(value))
@@ -209,7 +225,7 @@ public static class StringExtensions
         }
         return string.Join(" ", words);
     }
-    
+
     public static string TruncateSmart(this string? value, int maxLength)
     {
         if (string.IsNullOrEmpty(value)) return string.Empty;
