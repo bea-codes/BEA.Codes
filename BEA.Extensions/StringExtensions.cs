@@ -126,7 +126,7 @@ public static class StringExtensions
         string digitsOnly = Regex.Replace(input, @"\D", "");
 
         if (digitsOnly.Length != 14)
-            throw new ArgumentException("O CNPJ deve conter exatamente 14 dígitos.");
+            return digitsOnly;
 
         return $"{digitsOnly.Substring(0, 2)}.{digitsOnly.Substring(2, 3)}.{digitsOnly.Substring(5, 3)}/{digitsOnly.Substring(8, 4)}-{digitsOnly.Substring(12, 2)}";
     }
@@ -139,7 +139,7 @@ public static class StringExtensions
         string digitsOnly = Regex.Replace(input, @"\D", "");
 
         if (digitsOnly.Length != 11)
-            throw new ArgumentException("O CPF deve conter exatamente 11 dígitos.");
+            return digitsOnly;
 
         return $"{digitsOnly.Substring(0, 3)}.{digitsOnly.Substring(3, 3)}.{digitsOnly.Substring(6, 3)}-{digitsOnly.Substring(9, 2)}";
     }
