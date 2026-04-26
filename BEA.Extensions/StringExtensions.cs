@@ -118,6 +118,32 @@ public static class StringExtensions
         return input.Replace(" ", replaceFor);
     }
 
+    public static string ToFormattedCNPJ(this string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return string.Empty;
+
+        string digitsOnly = Regex.Replace(input, @"\D", "");
+
+        if (digitsOnly.Length != 14)
+            throw new ArgumentException("O CNPJ deve conter exatamente 14 dígitos.");
+
+        return $"{digitsOnly.Substring(0, 2)}.{digitsOnly.Substring(2, 3)}.{digitsOnly.Substring(5, 3)}/{digitsOnly.Substring(8, 4)}-{digitsOnly.Substring(12, 2)}";
+    }
+
+    public static string ToFormattedCPF(this string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return string.Empty;
+
+        string digitsOnly = Regex.Replace(input, @"\D", "");
+
+        if (digitsOnly.Length != 11)
+            throw new ArgumentException("O CPF deve conter exatamente 11 dígitos.");
+
+        return $"{digitsOnly.Substring(0, 3)}.{digitsOnly.Substring(3, 3)}.{digitsOnly.Substring(6, 3)}-{digitsOnly.Substring(9, 2)}";
+    }
+
     public static Dictionary<string, string> ToKeyValueDictionary(this string input, char separator)
     {
         if (string.IsNullOrWhiteSpace(input))
@@ -163,16 +189,7 @@ public static class StringExtensions
 
         return char.ToUpper(value[0]) + value.Substring(1).ToLower();
     }
-    //public static string ToUpperFirstLetter(this string input)
-    //{
-    //    if (string.IsNullOrEmpty(input))
-    //    {
-    //        return string.Empty;
-    //    }
-
-    //    return $"{input[0].ToString().ToUpper()}{input.Substring(1)}";
-    //}
-
+    
     public static string ToUpperFirstLetterEachWord(this string? value, IEnumerable<string> exceptions = default)
     {
         if (string.IsNullOrEmpty(value))
@@ -192,33 +209,7 @@ public static class StringExtensions
         }
         return string.Join(" ", words);
     }
-    //public static string ToUpperFirstLetterEachWord(this string input, IEnumerable<string> exceptions = null)
-    //{
-    //    if (string.IsNullOrEmpty(input))
-    //        return string.Empty;
-
-    //    if (exceptions is null)
-    //        exceptions = Enumerable.Empty<string>();
-
-    //    input = input.ToLower();
-
-    //    var brokenInput = input.Split(' ');
-
-    //    if (brokenInput.Length == 1)
-    //    {
-    //        return brokenInput[0].ToUpperFirstLetter();
-    //    }
-
-    //    string output = string.Empty;
-
-    //    foreach (string part in brokenInput)
-    //    {
-    //        output += " " + (exceptions.Any(e => e == part) ? part : part.ToUpperFirstLetter());
-    //    }
-
-    //    return output;
-    //}
-
+    
     public static string TruncateSmart(this string? value, int maxLength)
     {
         if (string.IsNullOrEmpty(value)) return string.Empty;
