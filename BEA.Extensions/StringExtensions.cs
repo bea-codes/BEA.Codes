@@ -21,7 +21,7 @@ public static class StringExtensions
         return string.IsNullOrWhiteSpace(value) ? null : value;
     }
 
-    public static string? OnlyNumbers(this string? value)
+    public static string OnlyNumbers(this string? value)
     {
         if (string.IsNullOrEmpty(value))
             return value;
