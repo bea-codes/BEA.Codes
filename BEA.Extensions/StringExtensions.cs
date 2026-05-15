@@ -21,6 +21,14 @@ public static class StringExtensions
         return string.IsNullOrWhiteSpace(value) ? null : value;
     }
 
+    public static string? OnlyNumbers(this string? value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return value;
+
+        return Regex.Replace(value, @"\D", "");
+    }
+
     public static string RemoveDiacritics(this string text)
     {
         string normalizedString = text.Normalize(NormalizationForm.FormD);
